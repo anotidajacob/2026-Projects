@@ -1,0 +1,13 @@
+def brute_force(password, wordlist):
+    with open(wordlist, "r") as file:
+        for word in file:
+            guess = word.strip()
+            print(f"Trying: {guess}")
+            if guess == password:
+                print(f"[FOUND] Password is: {guess}")
+                return
+    print("Password not found.")
+
+if __name__ == "__main__":
+    target_password = "admin123"
+    brute_force(target_password, "wordlist.txt")
