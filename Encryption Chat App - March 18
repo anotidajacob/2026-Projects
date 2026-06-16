@@ -1,0 +1,27 @@
+import socket
+from cryptography.fernet import Fernet
+
+key = Fernet.generate_key()
+cipher = Fernet(key)
+
+def start_server():
+    server = socket.socket()
+    server.bind(("0.0.0.0", 9999))
+    server.listen(1)
+    conn, addr = server.accept()
+    print("Connected:", addr)
+
+    while True:
+        msg = input("You: ")
+        encrypted = cipher.encrypt(msg.encode())
+        conn.send(encrypted)
+
+def start_client():
+    client = socket.socket()
+    client.connect(("127.0.0.1", 9999))
+
+    while True:
+        data = client.recv(1024)
+        print("Decrypted:", cipher.decrypt(data).decode())
+
+# Run server/client separately
