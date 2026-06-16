@@ -1,0 +1,10 @@
+def detect_intrusion(log_file):
+    with open(log_file, "r") as f:
+        for line in f:
+            if "Failed password" in line:
+                print("[ALERT] Possible brute-force attempt:", line.strip())
+            elif "Invalid user" in line:
+                print("[ALERT] Suspicious login:", line.strip())
+
+if __name__ == "__main__":
+    detect_intrusion("auth.log")
